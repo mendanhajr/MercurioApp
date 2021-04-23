@@ -1,6 +1,5 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-
 import Dashboard from './../Container/Dashboard/Dashboard';
 
 const AppStack = createStackNavigator();

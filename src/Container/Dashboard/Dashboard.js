@@ -1,11 +1,12 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import AuthContext from '../../contexts/auth';
 import Despesas from './../Despesas/Despesas';
 import Catalogo from './../Catalogo/Catalogo';
+import ListaDespesas from './../Despesas/ListaDespesas';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {withTheme, Header, Text} from 'react-native-elements';
-import {View} from "react-native";
 
 const Tab = createBottomTabNavigator();
 
@@ -44,19 +45,22 @@ function Dashboard(props) {
             <Tab.Navigator
                 screenOptions={({route}) => ({
                     tabBarIcon: ({focused, color, size}) => {
-                        let iconName;
+                        let iconName, Icon;
 
                         if (route.name === 'Despesas') {
-                            iconName = focused
-                                ? 'shopping-basket'
-                                : 'shopping-basket';
+                            iconName = 'shopping-basket';
+                            Icon = FontAwesome;
                         } else if (route.name === 'Catalogo') {
-                            iconName = focused ? 'list' : 'list';
+                            iconName = 'list';
+                            Icon = FontAwesome;
+                        } else if(route.name === 'ListaDespesas'){
+                            iconName = focused ? 'clipboard-list' : 'clipboard-list';
+                            Icon = FontAwesome5;
                         }
 
                         // You can return any component that you like here!
                         return (
-                            <FontAwesome
+                            <Icon
                                 raised
                                 name={iconName}
                                 size={size}
@@ -76,6 +80,7 @@ function Dashboard(props) {
             >
                 <Tab.Screen name="Despesas" component={Despesas}/>
                 <Tab.Screen name="Catalogo" component={Catalogo}/>
+                <Tab.Screen name="ListaDespesas" component={ListaDespesas}/>
             </Tab.Navigator>
         </>
     )
