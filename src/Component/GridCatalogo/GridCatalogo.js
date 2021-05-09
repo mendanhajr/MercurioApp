@@ -12,6 +12,14 @@ const GridCatalogo = (props) => {
 
     const { theme } = props;
 
+    const handlePressCatalogo = (idCatalogo, iconName, iconType) => {
+        props.setSelectedIdCatalogo( idCatalogo );
+
+        if(props.from === 'Despesas'){
+            props.handlePressBtnCatalogo(iconName, iconType);
+        }
+    }
+
     const renderBtnCatalogos = () => {
         if(arrCatalogo.length > 0){
             let arrCatalogoFiltradoPorTipo = arrCatalogo.filter(catalogo => {
@@ -32,7 +40,7 @@ const GridCatalogo = (props) => {
                             name={objIcon.name}
                             type={objIcon.type}
                             color={catalogo.id === props.selectedIdCatalogo ? theme.colors.primary : theme.colors.secondary}
-                            onPress={() => props.setSelectedIdCatalogo( catalogo.id )}
+                            onPress={() => handlePressCatalogo( catalogo.id, objIcon.name, objIcon.type )}
                             size={45}
                         />
                         <Text

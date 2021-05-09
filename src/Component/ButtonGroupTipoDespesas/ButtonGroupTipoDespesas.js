@@ -64,6 +64,8 @@ const ButtonGroupTipoDespesas = (props) => {
                 selectedIdTipoDespesa={selectedIdTipoDespesa}
                 selectedIdCatalogo={props.selectedIdCatalogo}
                 setSelectedIdCatalogo={props.setSelectedIdCatalogo}
+                handlePressBtnCatalogo={props.handlePressBtnCatalogo}
+                from={props.from}
             />
         </>
     )

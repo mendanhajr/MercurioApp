@@ -1,8 +1,8 @@
 import api from './api';
 
-export async function getItemCatalogo() {
+export async function getItemCatalogo(objParams) {
     try {
-        const response = await api.get('item-catalogo');
+        const response = await api.get('item-catalogo', objParams);
         return response.data;
     } catch (error) {
         console.log(error.response.status)

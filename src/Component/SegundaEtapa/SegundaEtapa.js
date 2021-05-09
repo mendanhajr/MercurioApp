@@ -12,25 +12,10 @@ const SegundaEtapa = (props) => {
                 <ButtonGroupTipoDespesas
                     setSelectedId={props.setSelectedIdTipoDespesa}
                     objStyles={{color: props.theme.colors.secondary, fontWeight: 'bold'}}
-                    setAnyErrorRequest={props.setAnyErrorRequest}
-                />
-            </View>
-            <View style={{marginBottom: 0}}>
-                <Button
-                    title="PRÓXIMO "
-                    raised
-                    buttonStyle={{backgroundColor: props.theme.colors.secondary}}
-                    onPress={props.swipeLeft}
-                    loading={false}
-                    icon={
-                        <Icon
-                            name="arrow-right"
-                            size={15}
-                            color="white"
-                        />
-                    }
-                    iconRight
-                    disabled={props.selectedIdCatalogo === 0}
+                    selectedIdCatalogo={props.selectedIdCatalogo}
+                    setSelectedIdCatalogo={props.setSelectedIdCatalogo}
+                    handlePressBtnCatalogo={props.handlePressBtnCatalogo}
+                    from={props.from}
                 />
             </View>
         </View>

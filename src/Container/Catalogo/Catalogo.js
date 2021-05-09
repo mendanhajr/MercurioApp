@@ -16,8 +16,6 @@ const Catalogo = (props) => {
     const [selectedIdCatalogo, setSelectedIdCatalogo] = useState(0);
     //state do input de tipo de despesa
     const [nomeDespesa, setNomeDespesa] = useState('');
-    //state para erros de requisicao
-    const [anyErrorRequest, setAnyErrorRequest] = useState(false);
 
     const [indexSelectedCatalogo, setIndexSelectedCatalogo] = useState(0);
     const {theme} = props;
@@ -49,7 +47,6 @@ const Catalogo = (props) => {
                     selectedIdCatalogo={selectedIdCatalogo}
                     setSelectedIdCatalogo={setSelectedIdCatalogo}
                     objStyles={{color: theme.colors.secondary}}
-                    setAnyErrorRequest={setAnyErrorRequest}
                 />
             </View>
             <View style={styles.itemFormTipoDespesa}>

@@ -1,89 +1,91 @@
-import React from 'react';
-import {View} from 'react-native';
-import {Button, ButtonGroup} from 'react-native-elements';
-import { arrayDatas } from '../../utils/utils';
-import Icon from "react-native-vector-icons/FontAwesome5";
-const anoAtual = new Date().getFullYear();
+import React, { useEffect, useState } from 'react';
+import {Button} from 'react-native-elements';
+import { View } from 'react-native';
+import { getItemCatalogo } from '../../services/itemCatalogo';
+import { Icon } from 'react-native-elements';
+import { getObjIcon } from '../../utils/utils';
 
 const TerceiraEtapa = (props) => {
 
-    const renderBtnMeses = () => {
-        return arrayDatas().map((mes, index) => {
-            return (
-                <View
-                    key={index}
-                    style={{
-                        margin: 5,
-                        width: '30%'
-                    }}
-                >
-                    <Button
-                        key={index}
-                        title={mes}
-                        titleStyle={{
-                            fontSize: 10,
-                            color:
-                                props.selectedIndexMes === 0 ||
-                                props.selectedIndexMes !== index
-                                    ? 'gray'
-                                    : props.theme.colors.secondary,
-                            fontWeight: 'bold'
-                        }}
-                        buttonStyle={{borderWidth: 2}}
-                        type={
-                            props.selectedIndexMes === 0 ||
-                            props.selectedIndexMes !== index
-                                ? 'outline'
-                                : 'solid'
-                        }
-                        onPress={() => props.setSelectedIndexMes(index)}
-                    />
-                </View>
-            )
-        })
+    const [arrItemCatalogo, setArrItemCatalogo] = useState([]);
+
+    const handlePressCatalogo = (idCatalogo) => {
+        props.setSelectedIdItemCatalogo( idCatalogo );
+        props.swipeLeft();
     }
 
-    return (
-        <View style={{display: "flex", justifyContent: 'space-between' , height: '100%'}}>
-            <View>
-                <ButtonGroup
-                    onPress={(value) => props.setSelectedIndexAno(value)}
-                    selectedIndex={props.selectedIndexAno}
-                    buttons=
-                        {
-                            [anoAtual - 1, anoAtual, anoAtual + 1]
-                        }
-                    containerStyle={{height: 50}}
-                    textStyle={{fontWeight: 'bold'}}
-                    selectedTextStyle={{color: props.theme.colors.secondary}}
-                />
-            </View>
+    useEffect(() => {
+        let objParams = {params: {
+                id_catalogo: props.idCatalogo
+            }}
+        getItemCatalogo(objParams).then(response => {
+            if (response.length > 0) {
+                setArrItemCatalogo(response);
+            }
 
-            <View style={{display: 'flex', flexWrap: 'wrap', flexDirection: 'row'}}>
-                {
-                    renderBtnMeses()
-                }
-            </View>
+        }).catch(error => {
 
-            <View style={{marginBottom: 0}}>
-                <Button
-                    title="FINALIZAR "
-                    raised
-                    buttonStyle={{backgroundColor: props.theme.colors.secondary}}
-                    onPress={props.handleClickBtnSalvar}
-                    loading={false}
-                    icon={
-                        <Icon
-                            name="arrow-right"
-                            size={15}
-                            color="white"
+        })
+    }, [])
+
+    const renderBtnItemCatalogo = () => {
+        if(arrItemCatalogo.length > 0){
+            return arrItemCatalogo.map((catalogo, index) => {
+                let objIcon = getObjIcon(catalogo.nome);
+
+                return (
+                    <View
+                        key={index}
+                        style={{
+                            margin: 5,
+                            width: '30%'
+                        }}
+                    >
+                        <Button
+                            key={index}
+                            icon={
+                                <Icon
+                                    name={props.nameIconItemCatalogo}
+                                    type={props.typeIconItemCatalogo}
+                                    size={15}
+                                    color={props.selectedIdItemCatalogo === 0 ||
+                                    props.selectedIdItemCatalogo !== catalogo.id
+                                        ? 'gray'
+                                        : props.theme.colors.secondary}
+                                />
+                            }
+                            title={`   ${catalogo.nome}`}
+                            titleStyle={{
+                                fontSize: 10,
+                                color:
+                                    props.selectedIdItemCatalogo === 0 ||
+                                    props.selectedIdItemCatalogo !== catalogo.id
+                                        ? 'gray'
+                                        : props.theme.colors.secondary,
+                                fontWeight: 'bold'
+                            }}
+                            buttonStyle={{borderWidth: 2}}
+                            type={
+                                props.selectedIdItemCatalogo === 0 ||
+                                props.selectedIdItemCatalogo !== catalogo.id
+                                    ? 'outline'
+                                    : 'solid'
+                            }
+                            onPress={() => handlePressCatalogo(catalogo.id)}
                         />
-                    }
-                    iconRight
-                />
-            </View>
+                    </View>
+                )
+            })
+        }
+    }
+
+    return(
+        <View style={{display: 'flex', flexWrap: 'wrap', flexDirection: 'row', marginTop: 10}}>
+            {
+                renderBtnItemCatalogo()
+            }
         </View>
-    )
+    );
 }
 
-export default TerceiraEtapa
+export default TerceiraEtapa;

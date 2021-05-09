@@ -9,6 +9,7 @@ import * as despesas from './../../services/despesas';
 const mesAtual = new Date().getMonth();
 import styles from './styles';
 import {showMessage} from "react-native-flash-message";
+import QuartaEtapa from "../../Component/QuartaEtapa/QuartaEtapa";
 
 function Despesas(props) {
     //valor da despesa
@@ -17,12 +18,17 @@ function Despesas(props) {
     const [selectedIdTipoDespesa, setSelectedIdTipoDespesa] = useState(0);
     //state para o id do tipo de despesa selecionado (FIXA) default;
     const [selectedIdCatalogo, setSelectedIdCatalogo] = useState(0);
+    //state para o id do tipo de despesa selecionado (FIXA) default;
+    const [selectedIdItemCatalogo, setSelectedIdItemCatalogo] = useState(0);
+    //state para o id do tipo de despesa selecionado (FIXA) default;
+    const [nameIconItemCatalogo, setNameIconItemCatalogo] = useState('');
+    const [typeIconItemCatalogo, setTypeIconItemCatalogo] = useState('');
     //state para o ano da despesa
     const [selectedIndexAno, setSelectedIndexAno] = useState(1);
     //state para controlar o mes da despesa
     const [selectedIndexMes, setSelectedIndexMes] = useState(mesAtual);
-    //state para erros de requisicao
-    const [anyErrorRequest, setAnyErrorRequest] = useState(false);
+
+    const [statusDespesa, setStatusDespesa] = useState(true);
 
     const [cardIndex, setCardIndex] = useState(0);
 
@@ -36,8 +42,8 @@ function Despesas(props) {
 
         let objParams = {
             valor: vl_despesa_formatado2,
-            catalogo_id : selectedIdCatalogo,
-            status: 'P',
+            item_catalogo_id : selectedIdItemCatalogo,
+            status: statusDespesa ? 'P' : 'A',
             mes_referencia: selectedIndexMes,
             ano_referencia: selectedIndexAno,
 
@@ -50,6 +56,12 @@ function Despesas(props) {
                 });
             setInitialState();
         });
+    }
+
+    const handlePressBtnCatalogo = (swipeLeft, name, type) => {
+        setNameIconItemCatalogo(name);
+        setTypeIconItemCatalogo(type);
+        swipeLeft;
     }
 
     const setInitialState = () => {
@@ -81,16 +93,27 @@ function Despesas(props) {
                         selectedIdTipoDespesa={selectedIdTipoDespesa}
                         selectedIdCatalogo={selectedIdCatalogo}
                         setSelectedIdCatalogo={setSelectedIdCatalogo}
-                        anyErrorRequest={anyErrorRequest}
-                        setAnyErrorRequest={setAnyErrorRequest}
                         swipeLeft={() => refSwiper.swipeLeft()}
+                        handlePressBtnCatalogo={(name, type) => handlePressBtnCatalogo(refSwiper.swipeLeft(), name, type)}
+                        from={'Despesas'}
                     />,
                     <TerceiraEtapa
+                        idCatalogo={selectedIdCatalogo}
+                        selectedIdItemCatalogo={selectedIdItemCatalogo}
+                        setSelectedIdItemCatalogo={setSelectedIdItemCatalogo}
+                        theme={theme}
+                        swipeLeft={() => refSwiper.swipeLeft()}
+                        nameIconItemCatalogo={nameIconItemCatalogo}
+                        typeIconItemCatalogo={typeIconItemCatalogo}
+                    />,
+                    <QuartaEtapa
                         theme={theme}
                         selectedIndexAno={selectedIndexAno}
                         setSelectedIndexAno={setSelectedIndexAno}
                         selectedIndexMes={selectedIndexMes}
                         setSelectedIndexMes={setSelectedIndexMes}
+                        statusDespesa={statusDespesa}
+                        setStatusDespesa={setStatusDespesa}
                         handleClickBtnSalvar={() => handleClickBtnSalvar(refSwiper.swipeLeft())}
                     />
                 ]
