@@ -9,6 +9,15 @@ const styles = StyleSheet.create({
     },
     text: {
 
+    },
+    containerLoading: {
+        flex: 1,
+        justifyContent: "center"
+    },
+    horizontalLoading: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        padding: 10
     }
 })
 

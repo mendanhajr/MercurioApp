@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import AuthContext from '../../contexts/auth';
 import Despesas from './../Despesas/Despesas';
@@ -48,8 +48,9 @@ function Dashboard(props) {
                         let iconName, Icon;
 
                         if (route.name === 'Despesas') {
-                            iconName = 'shopping-basket';
-                            Icon = FontAwesome;
+                            //iconName = 'shopping-basket';
+                            iconName = 'cash-register';
+                            Icon = FontAwesome5;
                         } else if (route.name === 'Catalogo') {
                             iconName = 'list';
                             Icon = FontAwesome;

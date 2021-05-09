@@ -3,8 +3,9 @@ import {StyleSheet} from "react-native";
 const styles = StyleSheet.create({
     container: {
         display: 'flex',
-        justifyContent: 'center', /* center items vertically, in this case */
-        alignItems: 'center',
+        justifyContent: 'space-between',
+        //justifyContent: 'space-around',
+        //alignItems: 'center',
         height: '100%',
     },
     itemFormTipoDespesa: {
