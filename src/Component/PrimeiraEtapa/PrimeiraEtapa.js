@@ -2,7 +2,7 @@ import React from 'react';
 import {TextInputMask} from 'react-native-masked-text';
 import {Card} from 'react-native-elements';
 import { useFocusEffect } from '@react-navigation/native';
-
+import {showMessage} from "react-native-flash-message";
 
 const PrimeiraEtapa = (props) => {
 
@@ -10,10 +10,22 @@ const PrimeiraEtapa = (props) => {
 
     useFocusEffect(
         React.useCallback(() => {
-            console.log(inputRefValor)
                 inputRefValor.focus();
         }, [])
     );
+
+    const handleSubmitEditing = () => {
+        let valor_format = props.valor.replace('R$', '');
+        if (valor_format !== '0,00') {
+            props.swipeLeft();
+        }else{
+            showMessage({
+                message: `O valor deve ser informado!`,
+                type: "danger",
+                icon: "danger",
+            });
+        }
+    }
 
     return (
         <Card
@@ -27,7 +39,8 @@ const PrimeiraEtapa = (props) => {
                 onChangeText={(value) => props.setValor(value)}
                 style={{fontSize: 30}}
                 autoFocus
-                onSubmitEditing={props.swipeLeft}
+                onSubmitEditing={() => handleSubmitEditing()}
+                blurOnSubmit={false}
                 refInput={(ref) => inputRefValor = ref}
             />
         </Card>

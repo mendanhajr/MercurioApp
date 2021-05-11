@@ -39,8 +39,8 @@ function Despesas(props) {
     let refSwiper = null;
 
     useEffect(() => {
-        console.log(props.navigation.isFocused());
-    }, [])
+        console.log(cardIndex)
+    }, [cardIndex])
 
     const handleClickBtnSalvar = (swipeLeft) => {
         let vl_despesa = valor.replace('.', ''),
@@ -80,6 +80,29 @@ function Despesas(props) {
         setCardIndex(0);
     }
 
+    const getValorFormatado = (valor) => {
+        return valor.replace('R$', '');
+    }
+
+    const validarLeftSwipe = () => {
+        if(cardIndex === 0 && getValorFormatado(valor) === '0,00'){
+            return true;
+        }
+
+        if(cardIndex === 1 && selectedIdCatalogo === 0){
+            return true;
+        }
+
+        if(cardIndex === 2 && selectedIdItemCatalogo === 0){
+            return true;
+        }
+    }
+
+    const validarRightSwipe = () => {
+        return cardIndex === 0;
+
+    }
+
     return (
         <Swiper
             containerStyle={styles.containerSwiper}
@@ -93,7 +116,6 @@ function Despesas(props) {
                         valor={valor}
                         setValor={setValor}
                         swipeLeft={() => refSwiper.swipeLeft()}
-                        teste={cardIndex}
                         isFocused={useIsFocused()}
                     />,
                     <SegundaEtapa
@@ -138,8 +160,34 @@ function Despesas(props) {
             onSwiped={(cardIndex) => {
 
             }}
-            onSwipedAll={() => {
-
+            onSwipedRight={(cardIndex) => {
+                setCardIndex(cardIndex - 1);
+                if(cardIndex === 0){
+                    refSwiper.swipeLeft();
+                }
+            }}
+            onSwipedLeft={(cardIndex) => {
+                setCardIndex(cardIndex + 1);
+            }}
+            dragEnd={() => {
+                if(cardIndex === 0){
+                    if(getValorFormatado(valor) === '0,00'){
+                        showMessage({
+                            message: `O valor deve ser informado!`,
+                            type: "danger",
+                            icon: "danger",
+                        });
+                    }
+                }
+                if(cardIndex === 2){
+                    if(selectedIdItemCatalogo === 0){
+                        showMessage({
+                            message: `O item deve ser informado!`,
+                            type: "danger",
+                            icon: "danger",
+                        });
+                    }
+                }
             }}
             cardIndex={cardIndex}
             goBackToPreviousCardOnSwipeRight
@@ -148,6 +196,8 @@ function Despesas(props) {
             swipeAnimationDuration={250}
             cardVerticalMargin={10}
             infinite
+            disableLeftSwipe={validarLeftSwipe()}
+            disableRightSwipe={validarRightSwipe()}
         >
         </Swiper>
     );
