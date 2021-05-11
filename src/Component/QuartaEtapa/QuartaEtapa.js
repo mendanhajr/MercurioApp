@@ -76,7 +76,7 @@ const TerceiraEtapa = (props) => {
 
             <View style={{marginBottom: 0}}>
                 <Button
-                    title="PRÓXIMO "
+                    title="FINALIZAR "
                     raised
                     buttonStyle={{backgroundColor: props.theme.colors.secondary}}
                     onPress={props.handleClickBtnSalvar}
