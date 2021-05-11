@@ -57,7 +57,7 @@ function Despesas(props) {
         }
         despesas.salvarDespesa(objParams).then(response => {
                 showMessage({
-                    message: `Item salvo!`,
+                    message: `O registro de despesa foi salvo!`,
                     type: "success",
                     icon: "success",
                 });
