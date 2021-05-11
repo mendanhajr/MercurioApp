@@ -20,10 +20,6 @@ function Dashboard(props) {
         signOut();
     }
 
-    /*useEffect(() => {
-        handleSignout();
-    });*/
-
     return (
         <>
             <Header
