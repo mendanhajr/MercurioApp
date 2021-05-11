@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View} from 'react-native';
+import {View, Keyboard} from 'react-native';
 import {Input, Button} from 'react-native-elements';
 import ButtonGroupTipoDespesas from "../../Component/ButtonGroupTipoDespesas/ButtonGroupTipoDespesas";
 import * as itemCatalogo from './../../services/itemCatalogo';
@@ -7,6 +7,7 @@ import styles from './styles';
 import {withTheme} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {showMessage} from "react-native-flash-message";
+import { useFocusEffect } from '@react-navigation/native';
 
 const Catalogo = (props) => {
 
@@ -19,6 +20,13 @@ const Catalogo = (props) => {
 
     const [indexSelectedCatalogo, setIndexSelectedCatalogo] = useState(0);
     const {theme} = props;
+
+
+    useFocusEffect(
+        React.useCallback(() => {
+            Keyboard.dismiss();
+        }, [])
+    );
 
     const handleClickBtnSalvar = () => {
         let objParams = {

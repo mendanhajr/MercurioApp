@@ -4,8 +4,6 @@ const styles = StyleSheet.create({
     container: {
         display: 'flex',
         justifyContent: 'space-between',
-        //justifyContent: 'space-around',
-        //alignItems: 'center',
         height: '100%',
     },
     itemFormTipoDespesa: {

@@ -1,9 +1,19 @@
 import React from 'react';
 import {TextInputMask} from 'react-native-masked-text';
 import {Card} from 'react-native-elements';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 const PrimeiraEtapa = (props) => {
+
+    let inputRefValor = null;
+
+    useFocusEffect(
+        React.useCallback(() => {
+            console.log(inputRefValor)
+                inputRefValor.focus();
+        }, [])
+    );
 
     return (
         <Card
@@ -18,6 +28,7 @@ const PrimeiraEtapa = (props) => {
                 style={{fontSize: 30}}
                 autoFocus
                 onSubmitEditing={props.swipeLeft}
+                refInput={(ref) => inputRefValor = ref}
             />
         </Card>
     );

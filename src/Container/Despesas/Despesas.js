@@ -1,15 +1,17 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import {withTheme} from 'react-native-elements';
 import {View} from 'react-native';
 import Swiper from 'react-native-deck-swiper';
 import PrimeiraEtapa from "../../Component/PrimeiraEtapa/PrimeiraEtapa";
 import SegundaEtapa from "../../Component/SegundaEtapa/SegundaEtapa";
 import TerceiraEtapa from "../../Component/TerceiraEtapa/TerceiraEtapa";
+import QuartaEtapa from "../../Component/QuartaEtapa/QuartaEtapa";
 import * as despesas from './../../services/despesas';
 const mesAtual = new Date().getMonth();
 import styles from './styles';
 import {showMessage} from "react-native-flash-message";
-import QuartaEtapa from "../../Component/QuartaEtapa/QuartaEtapa";
+import { useIsFocused } from '@react-navigation/native';
+
 
 function Despesas(props) {
     //valor da despesa
@@ -31,9 +33,14 @@ function Despesas(props) {
     const [statusDespesa, setStatusDespesa] = useState(true);
 
     const [cardIndex, setCardIndex] = useState(0);
+    const [despesaIsFocused, setDespesaIsFocused] = useState(false);
 
     const {theme} = props;
     let refSwiper = null;
+
+    useEffect(() => {
+        console.log(props.navigation.isFocused());
+    }, [])
 
     const handleClickBtnSalvar = (swipeLeft) => {
         let vl_despesa = valor.replace('.', ''),
@@ -86,6 +93,8 @@ function Despesas(props) {
                         valor={valor}
                         setValor={setValor}
                         swipeLeft={() => refSwiper.swipeLeft()}
+                        teste={cardIndex}
+                        isFocused={useIsFocused()}
                     />,
                     <SegundaEtapa
                         theme={theme}

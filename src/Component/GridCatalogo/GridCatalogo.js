@@ -27,7 +27,6 @@ const GridCatalogo = (props) => {
             });
             return arrCatalogoFiltradoPorTipo.map((catalogo, index) => {
                 let objIcon = getObjIcon(catalogo.nome);
-                console.log(catalogo.id === props.setSelectedIdCatalogo)
                 return (
                     <View
                         key={index}
