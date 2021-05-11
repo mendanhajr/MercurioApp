@@ -4,6 +4,7 @@ import { View } from 'react-native';
 import { getItemCatalogo } from '../../services/itemCatalogo';
 import { Icon } from 'react-native-elements';
 import { getObjIcon } from '../../utils/utils';
+import {showMessage} from "react-native-flash-message";
 
 const TerceiraEtapa = (props) => {
 
@@ -21,6 +22,13 @@ const TerceiraEtapa = (props) => {
         getItemCatalogo(objParams).then(response => {
             if (response.length > 0) {
                 setArrItemCatalogo(response);
+            }else{
+                showMessage({
+                    message: `Esse catálogo ainda não possui item!`,
+                    type: "warning",
+                    icon: "warning",
+                });
+                props.swipeRight();
             }
 
         }).catch(error => {

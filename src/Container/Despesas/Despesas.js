@@ -112,6 +112,7 @@ function Despesas(props) {
                         setSelectedIdItemCatalogo={setSelectedIdItemCatalogo}
                         theme={theme}
                         swipeLeft={() => refSwiper.swipeLeft()}
+                        swipeRight={() => refSwiper.swipeRight()}
                         nameIconItemCatalogo={nameIconItemCatalogo}
                         typeIconItemCatalogo={typeIconItemCatalogo}
                     />,
