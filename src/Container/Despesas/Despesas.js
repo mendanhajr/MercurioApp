@@ -32,15 +32,8 @@ function Despesas(props) {
 
     const [statusDespesa, setStatusDespesa] = useState(true);
 
-    const [cardIndex, setCardIndex] = useState(0);
-    const [despesaIsFocused, setDespesaIsFocused] = useState(false);
-
     const {theme} = props;
     let refSwiper = null;
-
-    useEffect(() => {
-        console.log(cardIndex)
-    }, [cardIndex])
 
     const handleClickBtnSalvar = (swipeLeft) => {
         let vl_despesa = valor.replace('.', ''),
@@ -77,30 +70,10 @@ function Despesas(props) {
         setSelectedIdCatalogo(0);
         setSelectedIndexAno(1);
         setSelectedIndexMes(mesAtual);
-        setCardIndex(0);
     }
 
     const getValorFormatado = (valor) => {
         return valor.replace('R$', '');
-    }
-
-    const validarLeftSwipe = () => {
-        if(cardIndex === 0 && getValorFormatado(valor) === '0,00'){
-            return true;
-        }
-
-        if(cardIndex === 1 && selectedIdCatalogo === 0){
-            return true;
-        }
-
-        if(cardIndex === 2 && selectedIdItemCatalogo === 0){
-            return true;
-        }
-    }
-
-    const validarRightSwipe = () => {
-        return cardIndex === 0;
-
     }
 
     return (
@@ -157,47 +130,25 @@ function Despesas(props) {
                     </View>
                 )
             }}
-            onSwiped={(cardIndex) => {
+            onSwipedLeft={(cardIndex) => {
+                console.log(cardIndex)
+                if(cardIndex === 0 && getValorFormatado(valor) === '0,00'){
+                    showMessage({
+                        message: 'O valor deve ser informado!',
+                        type: "danger",
+                        icon: "danger",
+                    });
+                    refSwiper.jumpToCardIndex(cardIndex);
+                }
 
             }}
-            onSwipedRight={(cardIndex) => {
-                setCardIndex(cardIndex - 1);
-                if(cardIndex === 0){
-                    refSwiper.swipeLeft();
-                }
-            }}
-            onSwipedLeft={(cardIndex) => {
-                setCardIndex(cardIndex + 1);
-            }}
-            dragEnd={() => {
-                if(cardIndex === 0){
-                    if(getValorFormatado(valor) === '0,00'){
-                        showMessage({
-                            message: `O valor deve ser informado!`,
-                            type: "danger",
-                            icon: "danger",
-                        });
-                    }
-                }
-                if(cardIndex === 2){
-                    if(selectedIdItemCatalogo === 0){
-                        showMessage({
-                            message: `O item deve ser informado!`,
-                            type: "danger",
-                            icon: "danger",
-                        });
-                    }
-                }
-            }}
-            cardIndex={cardIndex}
+            cardIndex={0}
             goBackToPreviousCardOnSwipeRight
             backgroundColor='#fff'
             verticalSwipe={false}
             swipeAnimationDuration={250}
             cardVerticalMargin={10}
             infinite
-            disableLeftSwipe={validarLeftSwipe()}
-            disableRightSwipe={validarRightSwipe()}
         >
         </Swiper>
     );

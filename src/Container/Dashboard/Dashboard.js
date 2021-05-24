@@ -7,6 +7,8 @@ import ListaDespesas from './../Despesas/ListaDespesas';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {withTheme, Header, Text} from 'react-native-elements';
+import { Icon } from 'react-native-elements';
+import {retrySymbolicateLogNow} from "react-native/Libraries/LogBox/Data/LogBoxData";
 
 const Tab = createBottomTabNavigator();
 
@@ -18,6 +20,19 @@ function Dashboard(props) {
 
     function handleSignout() {
         signOut();
+    }
+
+    const BtnSignOut = () => {
+        return (
+            <Icon
+                type={'font-awesome-5'}
+                name={'sign-out-alt'}
+                onPress={() => handleSignout()}
+                color={theme.colors.secondary}
+                size={20}
+                containerStyle={{marginTop: 2}}
+            />
+        )
     }
 
     return (
@@ -37,6 +52,7 @@ function Dashboard(props) {
                             MERCURIO
                         </Text>
                     , style: {color: theme.colors.secondary}}}
+                rightComponent={<BtnSignOut />}
             />
             <Tab.Navigator
                 screenOptions={({route}) => ({
@@ -75,9 +91,24 @@ function Dashboard(props) {
                     }
                 }}
             >
-                <Tab.Screen name="Despesas" component={Despesas}/>
-                <Tab.Screen name="Catalogo" component={Catalogo}/>
-                <Tab.Screen name="ListaDespesas" component={ListaDespesas}/>
+                <Tab.Screen
+                    name="Despesas"
+                    component={Despesas}
+                    options={{
+                        tabBarLabel: 'Registro',
+                    }}
+                />
+                <Tab.Screen
+                    name="Catalogo"
+                    component={Catalogo}
+                />
+                <Tab.Screen
+                    name="ListaDespesas"
+                    component={ListaDespesas}
+                    options={{
+                        tabBarLabel: 'Lista de despesa',
+                    }}
+                />
             </Tab.Navigator>
         </>
     )
