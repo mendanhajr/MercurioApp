@@ -16,20 +16,21 @@ import { useIsFocused } from '@react-navigation/native';
 function Despesas(props) {
     //valor da despesa
     const [valor, setValor] = useState('0,00');
-    //state para o id do tipo de despesa selecionado (FIXA) default;
+    //state para o id do tipo de despesa
     const [selectedIdTipoDespesa, setSelectedIdTipoDespesa] = useState(0);
-    //state para o id do tipo de despesa selecionado (FIXA) default;
+    //state para o id do catalogo;
     const [selectedIdCatalogo, setSelectedIdCatalogo] = useState(0);
-    //state para o id do tipo de despesa selecionado (FIXA) default;
+    //state para o id do item de catalogo;
     const [selectedIdItemCatalogo, setSelectedIdItemCatalogo] = useState(0);
-    //state para o id do tipo de despesa selecionado (FIXA) default;
+    //state para o nome do icone de item de catalogo
     const [nameIconItemCatalogo, setNameIconItemCatalogo] = useState('');
+    //state para o tipo do icone de item de catalogo
     const [typeIconItemCatalogo, setTypeIconItemCatalogo] = useState('');
     //state para o ano da despesa
     const [selectedIndexAno, setSelectedIndexAno] = useState(1);
-    //state para controlar o mes da despesa
+    //state para o mes da despesa
     const [selectedIndexMes, setSelectedIndexMes] = useState(mesAtual);
-
+    //state para o status da despesa
     const [statusDespesa, setStatusDespesa] = useState(true);
 
     const {theme} = props;
