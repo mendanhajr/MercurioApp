@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {withTheme} from 'react-native-elements';
 import {View} from 'react-native';
 import Swiper from 'react-native-deck-swiper';
@@ -35,7 +35,7 @@ function Despesas(props) {
     const {theme} = props;
     let refSwiper = null;
 
-    const handleClickBtnSalvar = (swipeLeft) => {
+    const handleClickBtnSalvar = () => {
         let vl_despesa = valor.replace('.', ''),
             vl_despesa_formatado1 = vl_despesa.replace(',', '.'),
             vl_despesa_formatado2 = vl_despesa_formatado1.replace('R$', '');
@@ -48,7 +48,7 @@ function Despesas(props) {
             ano_referencia: selectedIndexAno,
 
         }
-        despesas.salvarDespesa(objParams).then(response => {
+        despesas.salvarDespesa(objParams).then(() => {
                 showMessage({
                     message: `O registro de despesa foi salvo!`,
                     type: "success",
@@ -70,10 +70,6 @@ function Despesas(props) {
         setSelectedIdCatalogo(0);
         setSelectedIndexAno(1);
         setSelectedIndexMes(mesAtual);
-    }
-
-    const getValorFormatado = (valor) => {
-        return valor.replace('R$', '');
     }
 
     return (
@@ -129,18 +125,6 @@ function Despesas(props) {
                         {card}
                     </View>
                 )
-            }}
-            onSwipedLeft={(cardIndex) => {
-                console.log(cardIndex)
-                if(cardIndex === 0 && getValorFormatado(valor) === '0,00'){
-                    showMessage({
-                        message: 'O valor deve ser informado!',
-                        type: "danger",
-                        icon: "danger",
-                    });
-                    refSwiper.jumpToCardIndex(cardIndex);
-                }
-
             }}
             cardIndex={0}
             goBackToPreviousCardOnSwipeRight
