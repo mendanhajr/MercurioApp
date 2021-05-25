@@ -12,8 +12,9 @@ const GridCatalogo = (props) => {
 
     const { theme } = props;
 
-    const handlePressCatalogo = (idCatalogo, iconName, iconType) => {
+    const handlePressCatalogo = (idCatalogo, nomeCatalogo, iconName, iconType) => {
         props.setSelectedIdCatalogo( idCatalogo );
+        props.setNomeCatalogo( nomeCatalogo );
 
         if(props.from === 'Despesas'){
             props.handlePressBtnCatalogo(iconName, iconType);
@@ -39,7 +40,7 @@ const GridCatalogo = (props) => {
                             name={objIcon.name}
                             type={objIcon.type}
                             color={catalogo.id === props.selectedIdCatalogo ? theme.colors.primary : theme.colors.secondary}
-                            onPress={() => handlePressCatalogo( catalogo.id, objIcon.name, objIcon.type )}
+                            onPress={() => handlePressCatalogo( catalogo.id, catalogo.nome, objIcon.name, objIcon.type )}
                             size={45}
                         />
                         <Text

@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {ButtonGroup, Text} from 'react-native-elements';
+import {ButtonGroup} from 'react-native-elements';
 import * as tipoDespesa from './../../services/tipoDespesas';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import GridCatalogo from "../GridCatalogo/GridCatalogo";
 
 const ButtonGroupTipoDespesas = (props) => {
@@ -64,6 +63,7 @@ const ButtonGroupTipoDespesas = (props) => {
                 selectedIdTipoDespesa={selectedIdTipoDespesa}
                 selectedIdCatalogo={props.selectedIdCatalogo}
                 setSelectedIdCatalogo={props.setSelectedIdCatalogo}
+                setNomeCatalogo={props.setNomeCatalogo}
                 handlePressBtnCatalogo={props.handlePressBtnCatalogo}
                 from={props.from}
             />

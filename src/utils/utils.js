@@ -15,6 +15,19 @@ export function arrayDatas(){
     ]
 }
 
+/**
+ *Array de anos disponíveis no app
+ * @returns {(number|number)[]}
+ */
+export function arrayAnos() {
+    const anoAtual = new Date().getFullYear();
+    return [
+        anoAtual - 1,
+        anoAtual,
+        anoAtual + 1
+    ]
+}
+
 export function getObjIcon(iconName){
     switch (iconName){
         case "Casa":

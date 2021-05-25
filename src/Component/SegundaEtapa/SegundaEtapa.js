@@ -1,8 +1,6 @@
 import React from 'react';
 import ButtonGroupTipoDespesas from "../../Component/ButtonGroupTipoDespesas/ButtonGroupTipoDespesas";
 import {View} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import {Button} from "react-native-elements";
 
 const SegundaEtapa = (props) => {
 
@@ -13,6 +11,7 @@ const SegundaEtapa = (props) => {
                     setSelectedId={props.setSelectedIdTipoDespesa}
                     objStyles={{color: props.theme.colors.secondary, fontWeight: 'bold'}}
                     selectedIdCatalogo={props.selectedIdCatalogo}
+                    setNomeCatalogo={props.setNomeCatalogo}
                     setSelectedIdCatalogo={props.setSelectedIdCatalogo}
                     handlePressBtnCatalogo={props.handlePressBtnCatalogo}
                     from={props.from}

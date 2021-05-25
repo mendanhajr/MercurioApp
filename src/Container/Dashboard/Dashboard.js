@@ -8,7 +8,6 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {withTheme, Header, Text} from 'react-native-elements';
 import { Icon } from 'react-native-elements';
-import {retrySymbolicateLogNow} from "react-native/Libraries/LogBox/Data/LogBoxData";
 
 const Tab = createBottomTabNavigator();
 

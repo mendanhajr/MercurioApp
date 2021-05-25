@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { View, ActivityIndicator } from 'react-native';
-import {Text} from 'react-native-elements'
 
 import AppRoutes from './app.routes';
 import AuthRoutes from './auth.routes';

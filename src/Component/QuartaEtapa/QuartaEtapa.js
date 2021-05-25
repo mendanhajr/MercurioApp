@@ -76,10 +76,10 @@ const TerceiraEtapa = (props) => {
 
             <View style={{marginBottom: 0}}>
                 <Button
-                    title="FINALIZAR "
+                    title="IR PARA RESUMO "
                     raised
                     buttonStyle={{backgroundColor: props.theme.colors.secondary}}
-                    onPress={props.handleClickBtnSalvar}
+                    onPress={props.swipeLeft}
                     loading={false}
                     icon={
                         <Icon

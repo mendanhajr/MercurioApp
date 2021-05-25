@@ -6,6 +6,7 @@ import PrimeiraEtapa from "../../Component/PrimeiraEtapa/PrimeiraEtapa";
 import SegundaEtapa from "../../Component/SegundaEtapa/SegundaEtapa";
 import TerceiraEtapa from "../../Component/TerceiraEtapa/TerceiraEtapa";
 import QuartaEtapa from "../../Component/QuartaEtapa/QuartaEtapa";
+import QuintaEtapa from "../../Component/QuintaEtapa/QuintaEtapa";
 import * as despesas from './../../services/despesas';
 const mesAtual = new Date().getMonth();
 import styles from './styles';
@@ -33,29 +34,39 @@ function Despesas(props) {
     //state para o status da despesa
     const [statusDespesa, setStatusDespesa] = useState(true);
 
+    const [disableRightSwipe, setDisableRightSwipe] = useState(false);
+
+    const [disableLeftSwipe, setDisableLeftSwipe] = useState(false);
+
+    //STATES PARA EXIBIR DADOS NA ETAPA DE RESUMO
+    const [nomeItemCatalogo, setNomeItemCatalogo] = useState('');
+
+    const [nomeCatalogo, setNomeCatalogo] = useState('');
+
     const {theme} = props;
     let refSwiper = null;
 
-    const handleClickBtnSalvar = () => {
+    const handleClickBtnSalvar = (swipeLeft) => {
         let vl_despesa = valor.replace('.', ''),
             vl_despesa_formatado1 = vl_despesa.replace(',', '.'),
             vl_despesa_formatado2 = vl_despesa_formatado1.replace('R$', '');
 
         let objParams = {
             valor: vl_despesa_formatado2,
-            item_catalogo_id : selectedIdItemCatalogo,
+            item_catalogo_id: selectedIdItemCatalogo,
             status: statusDespesa ? 'P' : 'A',
             mes_referencia: selectedIndexMes,
             ano_referencia: selectedIndexAno,
 
         }
         despesas.salvarDespesa(objParams).then(() => {
-                showMessage({
-                    message: `O registro de despesa foi salvo!`,
-                    type: "success",
-                    icon: "success",
-                });
+            showMessage({
+                message: `O registro de despesa foi salvo!`,
+                type: "success",
+                icon: "success",
+            });
             setInitialState();
+            swipeLeft;
         });
     }
 
@@ -94,6 +105,7 @@ function Despesas(props) {
                         selectedIdTipoDespesa={selectedIdTipoDespesa}
                         selectedIdCatalogo={selectedIdCatalogo}
                         setSelectedIdCatalogo={setSelectedIdCatalogo}
+                        setNomeCatalogo={setNomeCatalogo}
                         swipeLeft={() => refSwiper.swipeLeft()}
                         handlePressBtnCatalogo={(name, type) => handlePressBtnCatalogo(refSwiper.swipeLeft(), name, type)}
                         from={'Despesas'}
@@ -107,6 +119,7 @@ function Despesas(props) {
                         swipeRight={() => refSwiper.swipeRight()}
                         nameIconItemCatalogo={nameIconItemCatalogo}
                         typeIconItemCatalogo={typeIconItemCatalogo}
+                        setNomeItemCatalogo={setNomeItemCatalogo}
                     />,
                     <QuartaEtapa
                         theme={theme}
@@ -116,7 +129,20 @@ function Despesas(props) {
                         setSelectedIndexMes={setSelectedIndexMes}
                         statusDespesa={statusDespesa}
                         setStatusDespesa={setStatusDespesa}
+                        swipeLeft={() => refSwiper.swipeLeft()}
+                    />,
+                    <QuintaEtapa
                         handleClickBtnSalvar={() => handleClickBtnSalvar(refSwiper.swipeLeft())}
+                        nameIconItemCatalogo={nameIconItemCatalogo}
+                        typeIconItemCatalogo={typeIconItemCatalogo}
+                        nomeCatalogo={nomeCatalogo}
+                        nomeItemCatalogo={nomeItemCatalogo}
+                        selectedIdTipoDespesa={selectedIdTipoDespesa}
+                        statusDespesa={statusDespesa}
+                        selectedIndexMes={selectedIndexMes}
+                        selectedIndexAno={selectedIndexAno}
+                        valor={valor}
+                        theme={theme}
                     />
                 ]
             }
@@ -134,6 +160,22 @@ function Despesas(props) {
             swipeAnimationDuration={250}
             cardVerticalMargin={10}
             infinite
+            dragStart={()=> {
+                //caso seja Primeira etapa bloqueia o swiperLeft
+                if(refSwiper.state.secondCardIndex === 1){
+                    setDisableRightSwipe(true);
+                }else{
+                    setDisableRightSwipe(false);
+                }
+                //caso seja Quarta etapa ou Quinta etapa bloqueia o swiperLeft
+                if(refSwiper.state.secondCardIndex === 4 || refSwiper.state.secondCardIndex === 0){
+                    setDisableLeftSwipe(true);
+                }else{
+                    setDisableLeftSwipe(false);
+                }
+            }}
+            disableLeftSwipe={disableLeftSwipe}
+            disableRightSwipe={disableRightSwipe}
         >
         </Swiper>
     );

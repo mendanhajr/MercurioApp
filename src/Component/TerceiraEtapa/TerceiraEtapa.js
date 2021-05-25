@@ -10,8 +10,9 @@ const TerceiraEtapa = (props) => {
 
     const [arrItemCatalogo, setArrItemCatalogo] = useState([]);
 
-    const handlePressCatalogo = (idCatalogo) => {
+    const handlePressCatalogo = (idCatalogo, nomeItemCatalogo) => {
         props.setSelectedIdItemCatalogo( idCatalogo );
+        props.setNomeItemCatalogo(nomeItemCatalogo);
         props.swipeLeft();
     }
 
@@ -79,7 +80,7 @@ const TerceiraEtapa = (props) => {
                                     ? 'outline'
                                     : 'solid'
                             }
-                            onPress={() => handlePressCatalogo(catalogo.id)}
+                            onPress={() => handlePressCatalogo(catalogo.id, catalogo.nome)}
                         />
                     </View>
                 )
