@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {View, Keyboard} from 'react-native';
 import {Input, Button} from 'react-native-elements';
 import ButtonGroupTipoDespesas from "../../Component/ButtonGroupTipoDespesas/ButtonGroupTipoDespesas";
@@ -18,7 +18,7 @@ const Catalogo = (props) => {
     //state do input de tipo de despesa
     const [nomeDespesa, setNomeDespesa] = useState('');
 
-    const [indexSelectedCatalogo, setIndexSelectedCatalogo] = useState(0);
+    const [nomeCatalogo, setNomeCatalogo] = useState('');
     const {theme} = props;
 
 
@@ -54,6 +54,7 @@ const Catalogo = (props) => {
                     setSelectedId={setSelectedId}
                     selectedIdCatalogo={selectedIdCatalogo}
                     setSelectedIdCatalogo={setSelectedIdCatalogo}
+                    setNomeCatalogo={setNomeCatalogo}
                     objStyles={{color: theme.colors.secondary}}
                 />
             </View>
