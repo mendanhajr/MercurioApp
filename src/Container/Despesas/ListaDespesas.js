@@ -1,25 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { withTheme, Text} from 'react-native-elements';
-import { ListItem, Avatar } from 'react-native-elements';
-import TouchableScale from 'react-native-touchable-scale';
+import React, {useState, useEffect} from 'react';
+import {withTheme, Text} from 'react-native-elements';
 import * as despesas from '../../services/despesas.js';
-import {Animated, ScrollView, StyleSheet, Image, ActivityIndicator, View, Keyboard } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import image from './../../../assets/icon/loading_mercurio.png';
+import {ActivityIndicator, View, Keyboard} from 'react-native';
+import { Icon } from 'react-native-elements';
 import styles from './styles';
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
+import {FlatList, SafeAreaView} from "react-native";
+import {arrayAnos, arrayDatas, getObjIcon} from '../../utils/utils';
 
 const ListaDespesas = (props) => {
 
     const [arrDespesas, setArrDespesas] = useState([]);
     const [loadingDespesas, setLoadingDespesas] = useState(true);
 
-    const { theme } = props;
-
-    //const startValue = useRef(new Animated.Value(1)).current;
-    const startValue = useRef(new Animated.Value(1))    ;
-    //const startValue = new Animated.Value(1);
-    const endValue = 1.5;
+    const {theme} = props;
 
     const recuperarDespesas = () => {
         despesas.recuperarDespesas().then(response => {
@@ -32,7 +26,7 @@ const ListaDespesas = (props) => {
 
     useEffect(() => {
         recuperarDespesas();
-    }, [startValue, endValue])
+    }, [])
 
     useFocusEffect(
         React.useCallback(() => {
@@ -41,62 +35,61 @@ const ListaDespesas = (props) => {
         }, [])
     );
 
-    const listarDespesas = () => {
-        if (arrDespesas.length > 0) {
-            return arrDespesas.map((despesa, index) => {
-                return (
-                    <ListItem
-                        key={index}
-                        bottomDivider
-                        Component={TouchableScale}
-                        friction={90} //
-                        tension={100} // These props are passed to the parent component (here TouchableScale)
-                        activeScale={0.95} //
-
-                    >
-                            <Icon
-                                name={
-                                    despesa.status === 'P'
-                                        ? 'checkmark-outline'
-                                        : despesa.status === 'A'
-                                        ? 'alarm-outline'
-                                        : ''
-                                }
-                                color={
-                                    despesa.status === 'P'
-                                        ? 'green'
-                                        : despesa.status === 'A'
-                                        ? 'red'
-                                        : ''
-                                }
-                                raised
-                                size={20}
-                            />
-                        <ListItem.Content>
-                            <ListItem.Title>{`${despesa.nome_catalogo} - ${despesa.nome}`}</ListItem.Title>
-                            <ListItem.Subtitle>{despesa.valor}</ListItem.Subtitle>
-                        </ListItem.Content>
-                    </ListItem>
-                )
-            })
-        }else{
-            /*return (
-                <Image
-                    source={require('./../../../assets/icon/loading_mercurio.png')}
-                />
-            )*/
-
-            return (
-                <View style={[styles.containerLoading, styles.horizontalLoading]}>
-                    <Text
-                        h3
-                        h3Style={{
-                            color: theme.colors.secondary
-                        }}
-                    >Nenhuma despesa encontrada</Text>
+    const listarDespesas = (despesa, index) => {
+        let objIcon = getObjIcon(despesa.nome_catalogo);
+        return (
+            <View
+                key={index}
+                style={{
+                    display: "flex",
+                    flexDirection: 'row',
+                    marginTop: 7,
+                    marginBottom: 7,
+                    marginLeft: 15,
+                    marginRight: 15,
+                    elevation: 7,
+                    backgroundColor: '#fff',
+                    //backgroundColor: theme.colors.primary,
+                }}
+            >
+                <View style={{flexGrow: 0}}>
+                    <Icon
+                        name={objIcon.name}
+                        type={objIcon.type}
+                        color={theme.colors.secondary}
+                        size={28}
+                        raised
+                    />
                 </View>
-            )
-        }
+                <View style={{flexGrow: 1, padding: 5}}>
+                    <Text style={{color: theme.colors.secondary}}>{`${despesa.nome}`}</Text>
+                    <Text style={{fontSize: 12, color: 'gray'}}>
+                        {`${arrayDatas()[despesa.mes_referencia]}/${arrayAnos()[despesa.ano_referencia]}`}
+                    </Text>
+                    <Text style={{fontSize: 12, color: 'gray'}}>{`${despesa.valor}`}</Text>
+                </View>
+                <View style={{flexGrow: 0, padding: 20}}>
+                    <Icon
+                        name={
+                            despesa.status === 'P'
+                                ? 'checkmark-outline'
+                                : despesa.status === 'A'
+                                ? 'alarm-outline'
+                                : ''
+                        }
+                        color={
+                            despesa.status === 'P'
+                                ? 'green'
+                                : despesa.status === 'A'
+                                ? 'red'
+                                : ''
+                        }
+                        type={'ionicon'}
+                        size={30}
+                    />
+                </View>
+            </View>
+        )
     }
 
     if (loadingDespesas) {
@@ -110,12 +103,14 @@ const ListaDespesas = (props) => {
         )
     }
 
-    return(
-        <ScrollView>
-            {
-                listarDespesas()
-            }
-        </ScrollView>
+    return (
+        <FlatList
+            data={arrDespesas}
+            renderItem={({item, index}) => (
+                listarDespesas(item, index)
+            )}
+            keyExtractor={item => item.id.toString()}
+        />
     )
 }
 

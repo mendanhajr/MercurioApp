@@ -1,4 +1,4 @@
-export function arrayDatas(){
+export function arrayDatas() {
     return [
         'JANEIRO',
         'FEVEREIRO',
@@ -28,46 +28,37 @@ export function arrayAnos() {
     ]
 }
 
-export function getObjIcon(iconName){
-    switch (iconName){
+export function getObjIcon(iconName) {
+    switch (iconName) {
         case "Casa":
             return {name: 'home', type: 'font-awesome'};
-            break;
         case 'Mercado':
             return {name: 'shopping-basket', type: 'font-awesome'};
-            case 'Compras':
+        case 'Compras':
             return {name: 'shopping-cart', type: 'font-awesome'};
-            case 'Boletos':
+        case 'Boletos':
             return {name: 'barcode', type: 'font-awesome'};
-            case 'Gasolina':
+        case 'Gasolina':
             return {name: 'gas-pump', type: 'font-awesome-5'};
-            break;
-            case 'Investimentos':
+        case 'Investimentos':
             return {name: 'chart-line', type: 'font-awesome-5'};
-            case 'Lanches':
+        case 'Lanches':
             return {name: 'utensils', type: 'font-awesome-5'};
-            break;
-            case 'Serviços':
+        case 'Serviços':
             return {name: 'tools', type: 'font-awesome-5'};
-            break;
-            case 'Carro':
+        case 'Carro':
             return {name: 'car', type: 'font-awesome-5'};
-            break;
-            case 'Medicamentos':
+        case 'Medicamentos':
             return {name: 'hospital', type: 'font-awesome-5'};
-            break;
-            case 'Transporte':
+        case 'Transporte':
             return {name: 'bus-alt', type: 'font-awesome-5'};
-            break;
-            case 'Viagem':
+        case 'Viagem':
             return {name: 'umbrella-beach', type: 'font-awesome-5'};
-            break;
-            case 'Entretenimento':
+        case 'Entretenimento':
             return {name: 'gamepad', type: 'font-awesome-5'};
-            break;
-            case 'Roupas':
+        case 'Roupas':
             return {name: 'tshirt', type: 'font-awesome-5'};
-            break;
-        default: return {name: 'exclamation', type: 'font-awesome'}
+        default:
+            return {name: 'exclamation', type: 'font-awesome'}
     }
 }
