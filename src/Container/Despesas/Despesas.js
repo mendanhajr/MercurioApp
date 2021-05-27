@@ -8,6 +8,7 @@ import TerceiraEtapa from "../../Component/TerceiraEtapa/TerceiraEtapa";
 import QuartaEtapa from "../../Component/QuartaEtapa/QuartaEtapa";
 import QuintaEtapa from "../../Component/QuintaEtapa/QuintaEtapa";
 import * as despesas from './../../services/despesas';
+import { arrayAnos } from '../../utils/utils';
 const mesAtual = new Date().getMonth();
 import styles from './styles';
 import {showMessage} from "react-native-flash-message";
@@ -56,7 +57,7 @@ function Despesas(props) {
             item_catalogo_id: selectedIdItemCatalogo,
             status: statusDespesa ? 'P' : 'A',
             mes_referencia: selectedIndexMes,
-            ano_referencia: selectedIndexAno,
+            ano_referencia: arrayAnos()[selectedIndexAno],
 
         }
         despesas.salvarDespesa(objParams).then(() => {
