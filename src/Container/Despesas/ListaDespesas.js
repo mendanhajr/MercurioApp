@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {ActivityIndicator, View, Keyboard, FlatList, TouchableWithoutFeedback} from 'react-native';
-import {withTheme, Text, Overlay, Icon, Button} from 'react-native-elements';
+import {ActivityIndicator, View, Keyboard, FlatList} from 'react-native';
+import TouchableScale from 'react-native-touchable-scale';
+import {withTheme, Text, Overlay, Icon, Button, ListItem} from 'react-native-elements';
 import * as despesas from '../../services/despesas.js';
 import FilterButton from '../../Component/FilterButton/FilterButton';
 import {useFocusEffect} from '@react-navigation/native';
@@ -57,12 +58,12 @@ const ListaDespesas = (props) => {
     }
 
     useEffect(() => {
+        console.log('useEffect');
         recuperarDespesas();
     }, [])
 
     useFocusEffect(
         React.useCallback(() => {
-            recuperarDespesas();
             Keyboard.dismiss();
         }, [])
     );
@@ -76,57 +77,63 @@ const ListaDespesas = (props) => {
         let objIcon = getObjIcon(despesa.nome_catalogo);
 
         return (
-            <View
-                key={index}
-                style={{
-                    display: "flex",
-                    flexDirection: 'row',
-                    marginTop: 7,
-                    marginBottom: 7,
-                    marginLeft: 15,
-                    marginRight: 15,
-                    elevation: 7,
-                    backgroundColor: '#fff',
-                    padding: 5
-                }}
+            <TouchableScale
+                friction={90} //
+                tension={100} // These props are passed to the parent component (here TouchableScale)
+                activeScale={0.95} //
             >
-                <View style={{flexGrow: 0}}>
-                    <Icon
-                        name={objIcon.name}
-                        type={objIcon.type}
-                        color={theme.colors.secondary}
-                        size={28}
-                        raised
-                    />
+                <View
+                    key={index}
+                    style={{
+                        display: "flex",
+                        flexDirection: 'row',
+                        marginTop: 7,
+                        marginBottom: 7,
+                        marginLeft: 15,
+                        marginRight: 15,
+                        elevation: 7,
+                        backgroundColor: '#fff',
+                        padding: 5
+                    }}
+                >
+                    <View style={{flexGrow: 0}}>
+                        <Icon
+                            name={objIcon.name}
+                            type={objIcon.type}
+                            color={theme.colors.secondary}
+                            size={28}
+                            raised
+                        />
+                    </View>
+                    <View style={{flexGrow: 1, padding: 5}}>
+                        <Text style={{color: theme.colors.secondary}}>{`${despesa.nome}`}</Text>
+                        <Text style={{fontSize: 12, color: 'gray'}}>
+                            {`${arrayDatas()[despesa.mes_referencia]}/${despesa.ano_referencia}`}
+                        </Text>
+                        <Text style={{fontSize: 12, color: 'gray'}}>{`${despesa.valor}`}</Text>
+                    </View>
+                    <View style={{flexGrow: 0, padding: 20}}>
+                        <Icon
+                            name={
+                                despesa.status === 'P'
+                                    ? 'checkmark-outline'
+                                    : despesa.status === 'A'
+                                    ? 'alarm-outline'
+                                    : ''
+                            }
+                            color={
+                                despesa.status === 'P'
+                                    ? 'green'
+                                    : despesa.status === 'A'
+                                    ? 'red'
+                                    : ''
+                            }
+                            type={'ionicon'}
+                            size={30}
+                        />
+                    </View>
                 </View>
-                <View style={{flexGrow: 1, padding: 5}}>
-                    <Text style={{color: theme.colors.secondary}}>{`${despesa.nome}`}</Text>
-                    <Text style={{fontSize: 12, color: 'gray'}}>
-                        {`${arrayDatas()[despesa.mes_referencia]}/${despesa.ano_referencia}`}
-                    </Text>
-                    <Text style={{fontSize: 12, color: 'gray'}}>{`${despesa.valor}`}</Text>
-                </View>
-                <View style={{flexGrow: 0, padding: 20}}>
-                    <Icon
-                        name={
-                            despesa.status === 'P'
-                                ? 'checkmark-outline'
-                                : despesa.status === 'A'
-                                ? 'alarm-outline'
-                                : ''
-                        }
-                        color={
-                            despesa.status === 'P'
-                                ? 'green'
-                                : despesa.status === 'A'
-                                ? 'red'
-                                : ''
-                        }
-                        type={'ionicon'}
-                        size={30}
-                    />
-                </View>
-            </View>
+            </TouchableScale>
         )
     }
 
@@ -195,6 +202,7 @@ const ListaDespesas = (props) => {
             {(!loadingDespesasFiltro) &&
             <FlatList
                 data={arrDespesas}
+                extraData={arrDespesas}
                 renderItem={({item, index}) => (
                     listarDespesas(item, index)
                 )}

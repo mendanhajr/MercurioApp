@@ -16,7 +16,7 @@ const BoxAnoMes = (props) => {
                     key={index}
                     style={{
                         margin: 5,
-                        width: '30%'
+                        width: '30%',
                     }}
                 >
                     <Button
@@ -25,7 +25,6 @@ const BoxAnoMes = (props) => {
                         titleStyle={{
                             fontSize: 10,
                             color:
-                                props.selectedIndexMes === 0 ||
                                 props.selectedIndexMes !== index
                                     ? 'gray'
                                     : theme.colors.secondary,
@@ -33,7 +32,6 @@ const BoxAnoMes = (props) => {
                         }}
                         buttonStyle={{borderWidth: 2}}
                         type={
-                            props.selectedIndexMes === 0 ||
                             props.selectedIndexMes !== index
                                 ? 'outline'
                                 : 'solid'
@@ -60,7 +58,13 @@ const BoxAnoMes = (props) => {
                     selectedTextStyle={{color: theme.colors.secondary}}
                 />
             </View>
-            <View style={{display: 'flex', flexWrap: 'wrap', flexDirection: 'row'}}>
+            <View style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                flexDirection: 'row',
+                paddingLeft: 10,
+                paddingRight: 5
+            }}>
                 {
                     renderBtnMeses()
                 }
