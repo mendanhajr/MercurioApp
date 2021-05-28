@@ -13,8 +13,12 @@ const Tab = createBottomTabNavigator();
 
 function Dashboard(props) {
 
+    //context de usuario logado
     const {user, signOut} = useContext(AuthContext);
+    //theme
     const {theme} = props;
+    //state para array de despesas
+
 
 
     function handleSignout() {

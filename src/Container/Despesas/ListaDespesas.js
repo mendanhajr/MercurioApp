@@ -17,8 +17,6 @@ const ListaDespesas = (props) => {
 
     //state para o array de despesas;
     const [arrDespesas, setArrDespesas] = useState([]);
-    //state para loading de despesas;
-    const [loadingDespesas, setLoadingDespesas] = useState(true);
     //state para loading de despesas por filtro;
     const [loadingDespesasFiltro, setLoadingDespesasFiltro] = useState(false);
     //state para filtro de mes
@@ -33,6 +31,7 @@ const ListaDespesas = (props) => {
     const {theme} = props;
 
     const recuperarDespesas = () => {
+        setLoadingDespesasFiltro(true);
         let objParams = {
             params: {
                 ano_referencia: arrayAnos()[indexAnoFiltro],
@@ -41,11 +40,9 @@ const ListaDespesas = (props) => {
         }
         despesas.recuperarDespesas(objParams).then(response => {
             setArrDespesas(response);
-            setLoadingDespesas(false);
             setLoadingDespesasFiltro(false);
             setRefreshingList(false);
         }).catch(error => {
-            setLoadingDespesas(false);
             setLoadingDespesasFiltro(false);
             setRefreshingList(false);
         })
@@ -139,17 +136,6 @@ const ListaDespesas = (props) => {
 
     const toogleVisibleOverlay = () => {
         setIsVisible(!isVisible);
-    }
-
-    if (loadingDespesas) {
-        return (
-            <View style={[styles.containerLoading, styles.horizontalLoading]}>
-                <ActivityIndicator
-                    size={100}
-                    color={theme.colors.secondary}
-                />
-            </View>
-        )
     }
     return (
         <>
