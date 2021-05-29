@@ -56,7 +56,7 @@ function Despesas(props) {
             valor: vl_despesa_formatado2,
             item_catalogo_id: selectedIdItemCatalogo,
             status: statusDespesa ? 'P' : 'A',
-            mes_referencia: selectedIndexMes,
+            mes_referencia: selectedIndexMes + 1,
             ano_referencia: arrayAnos()[selectedIndexAno],
 
         }

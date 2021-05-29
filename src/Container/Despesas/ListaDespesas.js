@@ -35,7 +35,7 @@ const ListaDespesas = (props) => {
         let objParams = {
             params: {
                 ano_referencia: arrayAnos()[indexAnoFiltro],
-                mes_referencia: indexMesFiltro
+                mes_referencia: indexMesFiltro + 1
             }
         }
         despesas.recuperarDespesas(objParams).then(response => {
@@ -105,7 +105,7 @@ const ListaDespesas = (props) => {
                     <View style={{flexGrow: 1, padding: 5}}>
                         <Text style={{color: theme.colors.secondary}}>{`${despesa.nome}`}</Text>
                         <Text style={{fontSize: 12, color: 'gray'}}>
-                            {`${arrayDatas()[despesa.mes_referencia]}/${despesa.ano_referencia}`}
+                            {`${arrayDatas()[despesa.mes_referencia - 1]}/${despesa.ano_referencia}`}
                         </Text>
                         <Text style={{fontSize: 12, color: 'gray'}}>{`${despesa.valor}`}</Text>
                     </View>
