@@ -1,12 +1,16 @@
 {
-  "name": "MercurioApp",
-  "displayName": "MercurioApp",
   "expo": {
-    "name": "MercurioApp",
-    "slug": "MercurioApp",
+    "name": "Mercurio",
+    "icon": "./path/to/your/app-icon.png",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "slug": "mercurio",
+    "ios": {
+      "bundleIdentifier": "com.mendanha.mercurio",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.mendanha.mercurio",
+      "versionCode": 1
+    }
   }
 }
