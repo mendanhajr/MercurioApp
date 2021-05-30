@@ -7,7 +7,7 @@ import BoxAnoMes from "../BoxAnoMes/BoxAnoMes";
 const TerceiraEtapa = (props) => {
 
     return (
-        <View style={{display: "flex", justifyContent: 'space-between' , height: '100%'}}>
+        <View style={{flex: 1, justifyContent: 'space-around'}}>
             <BoxAnoMes
                 selectedIndexMes={props.selectedIndexMes}
                 setSelectedIndexMes={props.setSelectedIndexMes}
