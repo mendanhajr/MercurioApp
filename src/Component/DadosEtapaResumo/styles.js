@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: 'row',
         width: '100%',
-        marginTop: 20,
+        marginTop: 13,
     },
     itemDadosDespesa: {
         flexGrow: 1,

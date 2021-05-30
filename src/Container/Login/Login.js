@@ -1,5 +1,5 @@
 import React,  {useContext, useState} from 'react';
-import {Input, Text, Button, Icon} from 'react-native-elements';
+import {Input, Text, Button} from 'react-native-elements';
 import {StyleSheet, View} from 'react-native';
 import {withTheme} from 'react-native-elements';
 import AuthContext from '../../contexts/auth';
@@ -42,6 +42,7 @@ import AuthContext from '../../contexts/auth';
                 <View style={styles.itemLogin}>
                     <Input
                         placeholder='Senha'
+                        secureTextEntry
                         leftIcon={{type: 'font-awesome', name: 'unlock-alt', color: theme.colors.secondary}}
                         value={passwordUser}
                         onChangeText={(value) => setPasswordUser((value))}

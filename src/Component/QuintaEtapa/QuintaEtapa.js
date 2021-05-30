@@ -8,7 +8,7 @@ import {arrayAnos} from '../../utils/utils';
 
 const QuintaEtapa = (props) => {
     return (
-        <View style={{display: "flex", justifyContent: 'space-between', height: '100%'}}>
+        <View style={{flex: 1, justifyContent: 'space-around'}}>
             <View
                 style={styles.containerNota}
             >
@@ -16,7 +16,7 @@ const QuintaEtapa = (props) => {
                         <Icon
                             name={props.nameIconItemCatalogo}
                             type={props.typeIconItemCatalogo}
-                            size={190}
+                            size={140}
                             color={props.theme.colors.secondary}
                         />
                     </View>

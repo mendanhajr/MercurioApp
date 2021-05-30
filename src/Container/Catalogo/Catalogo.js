@@ -49,7 +49,14 @@ const Catalogo = (props) => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.itemFormTipoDespesa}>
+            <View style={styles.item}>
+                <Input
+                    placeholder='Nome do item de catálogo'
+                    value={nomeDespesa}
+                    onChangeText={(value) => setNomeDespesa((value))}
+                />
+            </View>
+            <View style={styles.item}>
                 <ButtonGroupTipoDespesas
                     setSelectedId={setSelectedId}
                     selectedIdCatalogo={selectedIdCatalogo}
@@ -58,14 +65,7 @@ const Catalogo = (props) => {
                     objStyles={{color: theme.colors.secondary}}
                 />
             </View>
-            <View style={styles.itemFormTipoDespesa}>
-                <Input
-                    placeholder='Nome do item de catálogo'
-                    value={nomeDespesa}
-                    onChangeText={(value) => setNomeDespesa((value))}
-                />
-            </View>
-            <View style={styles.itemFormTipoDespesa}>
+            <View style={styles.item}>
                 <Button
                     icon={
                         <Icon

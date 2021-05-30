@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Mercurio",
-    "icon": "./path/to/your/app-icon.png",
+    "icon": "./assets/icon/appicon/merc_launcher.png",
     "version": "1.0.0",
     "slug": "mercurio",
     "ios": {

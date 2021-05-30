@@ -11,14 +11,14 @@ const DadosEtapaResumo = (props) => {
         <View style={styles.containerDadosDespesa}>
             <View style={styles.itemDadosDespesa}>
                 <Text
-                    style={{color: theme.colors.secondary, fontSize: 18, fontWeight: 'bold'}}
+                    style={{color: theme.colors.secondary, fontSize: 14, fontWeight: 'bold'}}
                 >
                     {props.label}:
                 </Text>
             </View>
             <View style={[styles.itemDadosDespesa, {alignItems: 'flex-end'}]}>
                 <Text
-                    style={{color: theme.colors.secondary, fontSize: 18}}
+                    style={{color: theme.colors.secondary, fontSize: 14}}
                 >
                     {props.dado.toUpperCase()}
                 </Text>

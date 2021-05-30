@@ -28,7 +28,7 @@ const App = (props) => {
             <AuthProvider>
                 <ThemeProvider theme={theme}>
                     <Routes/>
-                    <FlashMessage position="top"/>
+                    <FlashMessage position="center"/>
                 </ThemeProvider>
             </AuthProvider>
         </NavigationContainer>

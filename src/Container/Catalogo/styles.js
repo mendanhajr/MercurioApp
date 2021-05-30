@@ -2,12 +2,10 @@ import {StyleSheet} from "react-native";
 
 const styles = StyleSheet.create({
     container: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        height: '100%',
+        flex: 1,
+        justifyContent: 'space-around',
     },
-    itemFormTipoDespesa: {
-        width: '90%',
+    item: {
         margin: 10
     }
 })
