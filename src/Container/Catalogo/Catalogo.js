@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Keyboard} from 'react-native';
 import {Input, Button} from 'react-native-elements';
 import ButtonGroupTipoDespesas from "../../Component/ButtonGroupTipoDespesas/ButtonGroupTipoDespesas";
@@ -7,7 +7,7 @@ import styles from './styles';
 import {withTheme} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {showMessage} from "react-native-flash-message";
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 
 const Catalogo = (props) => {
 
@@ -19,6 +19,8 @@ const Catalogo = (props) => {
     const [nomeDespesa, setNomeDespesa] = useState('');
 
     const [nomeCatalogo, setNomeCatalogo] = useState('');
+
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
     const {theme} = props;
 
 
@@ -27,6 +29,26 @@ const Catalogo = (props) => {
             Keyboard.dismiss();
         }, [])
     );
+
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener(
+            'keyboardDidShow',
+            () => {
+                setKeyboardVisible(true); // or some other action
+            }
+        );
+        const keyboardDidHideListener = Keyboard.addListener(
+            'keyboardDidHide',
+            () => {
+                setKeyboardVisible(false); // or some other action
+            }
+        );
+
+        return () => {
+            keyboardDidHideListener.remove();
+            keyboardDidShowListener.remove();
+        };
+    })
 
     const handleClickBtnSalvar = () => {
         let objParams = {
@@ -56,31 +78,35 @@ const Catalogo = (props) => {
                     onChangeText={(value) => setNomeDespesa((value))}
                 />
             </View>
-            <View style={styles.item}>
-                <ButtonGroupTipoDespesas
-                    setSelectedId={setSelectedId}
-                    selectedIdCatalogo={selectedIdCatalogo}
-                    setSelectedIdCatalogo={setSelectedIdCatalogo}
-                    setNomeCatalogo={setNomeCatalogo}
-                    objStyles={{color: theme.colors.secondary}}
-                />
-            </View>
-            <View style={styles.item}>
-                <Button
-                    icon={
-                        <Icon
-                            name="save"
-                            size={15}
-                            color={theme.colors.secondary}
-                        />
-                    }
-                    title=" SALVAR"
-                    raised
-                    titleStyle={{color: theme.colors.secondary}}
-                    onPress={() => handleClickBtnSalvar()}
-                    disabled={!(nomeDespesa && selectedIdCatalogo)}
-                />
-            </View>
+            {(!isKeyboardVisible) &&
+            <>
+                <View style={styles.item}>
+                    <ButtonGroupTipoDespesas
+                        setSelectedId={setSelectedId}
+                        selectedIdCatalogo={selectedIdCatalogo}
+                        setSelectedIdCatalogo={setSelectedIdCatalogo}
+                        setNomeCatalogo={setNomeCatalogo}
+                        objStyles={{color: theme.colors.secondary}}
+                    />
+                </View>
+                <View style={styles.item}>
+                    <Button
+                        icon={
+                            <Icon
+                                name="save"
+                                size={15}
+                                color={theme.colors.secondary}
+                            />
+                        }
+                        title=" SALVAR"
+                        raised
+                        titleStyle={{color: theme.colors.secondary}}
+                        onPress={() => handleClickBtnSalvar()}
+                        disabled={!(nomeDespesa && selectedIdCatalogo)}
+                    />
+                </View>
+            </>
+            }
         </View>
     );
 }
