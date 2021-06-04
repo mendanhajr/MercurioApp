@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react';
+//import { SafeAreaView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import {ActivityIndicator, View, Keyboard, FlatList} from 'react-native';
 import TouchableScale from 'react-native-touchable-scale';
-import {withTheme, Text, Overlay, Icon, Button, ListItem} from 'react-native-elements';
+import {withTheme, Text, Overlay, Icon, Button} from 'react-native-elements';
 import * as despesas from '../../services/despesas.js';
 import FilterButton from '../../Component/FilterButton/FilterButton';
 import {useFocusEffect} from '@react-navigation/native';
@@ -138,9 +140,9 @@ const ListaDespesas = (props) => {
         setIsVisible(!isVisible);
     }
     return (
-        <>
+        <SafeAreaView>
             <View style={{display: "flex", flexDirection: 'row'}}>
-                <View>
+                <View style={{backgroundColor: theme.colors.primary, flexGrow: 1}}>
                     <FilterButton
                         onPress={() => setIsVisible(true)}
                         title={`${arrayDatas()[indexMesFiltro]}/${arrayAnos()[indexAnoFiltro]}`}
@@ -197,7 +199,7 @@ const ListaDespesas = (props) => {
                 onRefresh={() => onRefresList()}
             />
             }
-        </>
+        </SafeAreaView>
     )
 }
 
