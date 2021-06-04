@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import AuthContext from '../../contexts/auth';
 import Despesas from './../Despesas/Despesas';
@@ -8,55 +8,20 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {withTheme, Header, Text} from 'react-native-elements';
 import { Icon } from 'react-native-elements';
+import HeaderDefault from "../../Component/Header/HeaderDefault";
 
 const Tab = createBottomTabNavigator();
 
 function Dashboard(props) {
 
     //context de usuario logado
-    const {user, signOut} = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     //theme
     const {theme} = props;
-    //state para array de despesas
-
-
-
-    function handleSignout() {
-        signOut();
-    }
-
-    const BtnSignOut = () => {
-        return (
-            <Icon
-                type={'font-awesome-5'}
-                name={'sign-out-alt'}
-                onPress={() => handleSignout()}
-                color={theme.colors.secondary}
-                size={20}
-                containerStyle={{marginTop: 2}}
-            />
-        )
-    }
 
     return (
         <>
-            <Header
-                placement="center"
-                centerComponent={{text:
-                        <Text
-                            style={
-                                {
-                                    fontFamily: "DalekPinpointBold",
-                                    fontSize: 15,
-                                    color: theme.colors.secondary
-                                }
-                            }
-                        >
-                            MERCURIO
-                        </Text>
-                    , style: {color: theme.colors.secondary}}}
-                rightComponent={<BtnSignOut />}
-            />
+            <HeaderDefault />
             <Tab.Navigator
                 screenOptions={({route}) => ({
                     tabBarIcon: ({focused, color, size}) => {
