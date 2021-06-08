@@ -39,8 +39,14 @@ const GridCatalogo = (props) => {
                         <Icon
                             name={objIcon.name}
                             type={objIcon.type}
-                            color={catalogo.id === props.selectedIdCatalogo ? theme.colors.primary : theme.colors.secondary}
-                            onPress={() => handlePressCatalogo( catalogo.id, catalogo.nome, objIcon.name, objIcon.type )}
+                            color={
+                                props.from !== 'FiltroCatalogo'
+                                    ?//caso o componente seja chamado de Despesa ou de Catalogo
+                                    catalogo.id === props.selectedIdCatalogo ? theme.colors.primary : theme.colors.secondary
+                                    ://caso o componente seja chamado de FiltroCatalogo é permitido selecionar mais de um catalogo
+                                    props.arrIdCatalogo.findIndex(arr => arr === catalogo.id) !== -1 ? theme.colors.primary : theme.colors.secondary
+                            }
+                            onPress={() => handlePressCatalogo(catalogo.id, catalogo.nome, objIcon.name, objIcon.type)}
                             size={45}
                         />
                         <Text

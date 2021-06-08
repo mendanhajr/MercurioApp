@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {ButtonGroup} from 'react-native-elements';
+import {ButtonGroup, useTheme} from 'react-native-elements';
 import * as tipoDespesa from './../../services/tipoDespesas';
 import GridCatalogo from "../GridCatalogo/GridCatalogo";
+import {ActivityIndicator, View} from "react-native";
 
 const ButtonGroupTipoDespesas = (props) => {
 
@@ -15,6 +16,8 @@ const ButtonGroupTipoDespesas = (props) => {
     const [arrObjTipoDespesas, setArrObjTipoDespesas] = useState([]);
     //LOADINGS
     const [loadingTipoDespesa, setLoadingTipoDespesa] = useState(true);
+
+    const { theme } = useTheme();
 
     useEffect(() => {
         tipoDespesa.getTipoDespesas().then(response => {
@@ -44,6 +47,16 @@ const ButtonGroupTipoDespesas = (props) => {
         setSelectedIdTipoDespesa(arrObjTipoDespesas[value].id);
         setSelectedIndex(value);
     }
+    if (loadingTipoDespesa) {
+        return (
+            <View>
+                <ActivityIndicator
+                    size={50}
+                    color={theme.colors.secondary}
+                />
+            </View>
+        )
+    }
     return (
         <>
             <ButtonGroup
@@ -66,6 +79,7 @@ const ButtonGroupTipoDespesas = (props) => {
                 setNomeCatalogo={props.setNomeCatalogo}
                 handlePressBtnCatalogo={props.handlePressBtnCatalogo}
                 from={props.from}
+                arrIdCatalogo={props.arrIdCatalogo}
             />
         </>
     )

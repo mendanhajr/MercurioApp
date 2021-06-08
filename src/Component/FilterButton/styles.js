@@ -2,10 +2,6 @@ import {StyleSheet} from "react-native";
 
 const styles = StyleSheet.create({
     appButtonContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
         elevation: 10,
         borderRadius: 30,
         marginLeft: 15,

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 //import { SafeAreaView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {ActivityIndicator, View, Keyboard, FlatList} from 'react-native';
 import TouchableScale from 'react-native-touchable-scale';
 import {withTheme, Text, Overlay, Icon, Button} from 'react-native-elements';
@@ -10,6 +10,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {arrayDatas, arrayAnos, getObjIcon} from '../../utils/utils';
 import styles from './styles';
 import BoxAnoMes from "../../Component/BoxAnoMes/BoxAnoMes";
+import FiltroCatalogo from "../../Component/FiltroCatalogo/FiltroCatalogo";
 
 const anoAtual = new Date().getFullYear();
 const mesAtual = new Date().getMonth();
@@ -19,29 +20,36 @@ const ListaDespesas = (props) => {
 
     //state para o array de despesas;
     const [arrDespesas, setArrDespesas] = useState([]);
+    //state para valor total de despesas
+    const [valorTotal, setValorTotal] = useState(0);
     //state para loading de despesas por filtro;
-    const [loadingDespesasFiltro, setLoadingDespesasFiltro] = useState(false);
+    const [loadingDespesasFiltro, setLoadingDespesasFiltro] = useState(true);
     //state para filtro de mes
     const [indexMesFiltro, setIndexMesFiltro] = useState(mesAtual);
     //state para filtro de ano
     const [indexAnoFiltro, setIndexAnoFiltro] = useState(indexAnoAtual);
     //controla botoes de filtro de ano e mes
     const [isVisible, setIsVisible] = useState(false);
+    //controla botoes de filtro de catalogo
+    const [isVisibleFiltroCatalogo, setIsVisibleFiltroCatalogo] = useState(false);
     //controla o state de refresh da lista
     const [refreshingList, setRefreshingList] = useState(false);
+    //state para array de catalogos selecionados
+    const [arrIdCatalogo, setArrIdCatalogo] = useState([]);
 
     const {theme} = props;
 
     const recuperarDespesas = () => {
-        setLoadingDespesasFiltro(true);
         let objParams = {
             params: {
                 ano_referencia: arrayAnos()[indexAnoFiltro],
-                mes_referencia: indexMesFiltro + 1
+                mes_referencia: indexMesFiltro + 1,
+                idCatalogo: arrIdCatalogo.length > 0 ? encodeURIComponent(JSON.stringify(arrIdCatalogo)) : null
             }
         }
         despesas.recuperarDespesas(objParams).then(response => {
-            setArrDespesas(response);
+            setArrDespesas(response.result);
+            setValorTotal(response.valorTotal);
             setLoadingDespesasFiltro(false);
             setRefreshingList(false);
         }).catch(error => {
@@ -52,6 +60,7 @@ const ListaDespesas = (props) => {
 
     const buscarDespesasPorFiltro = () => {
         setIsVisible(false);
+        setIsVisibleFiltroCatalogo(false);
         setLoadingDespesasFiltro(true);
         recuperarDespesas();
     }
@@ -100,16 +109,16 @@ const ListaDespesas = (props) => {
                             name={objIcon.name}
                             type={objIcon.type}
                             color={theme.colors.secondary}
-                            size={28}
+                            size={20}
                             raised
                         />
                     </View>
                     <View style={{flexGrow: 1, padding: 5}}>
                         <Text style={{color: theme.colors.secondary}}>{`${despesa.nome}`}</Text>
-                        <Text style={{fontSize: 12, color: 'gray'}}>
+                        <Text style={{fontSize: 10, color: 'gray'}}>
                             {`${arrayDatas()[despesa.mes_referencia - 1]}/${despesa.ano_referencia}`}
                         </Text>
-                        <Text style={{fontSize: 12, color: 'gray'}}>{`${despesa.valor}`}</Text>
+                        <Text style={{fontSize: 10, color: 'gray'}}>{`R$ ${despesa.valor}`}</Text>
                     </View>
                     <View style={{flexGrow: 0, padding: 20}}>
                         <Icon
@@ -128,7 +137,7 @@ const ListaDespesas = (props) => {
                                     : ''
                             }
                             type={'ionicon'}
-                            size={30}
+                            size={20}
                         />
                     </View>
                 </View>
@@ -139,10 +148,13 @@ const ListaDespesas = (props) => {
     const toogleVisibleOverlay = () => {
         setIsVisible(!isVisible);
     }
+    const toogleVisibleFiltroCatalogo = () => {
+        setIsVisibleFiltroCatalogo(!isVisibleFiltroCatalogo);
+    }
     return (
         <SafeAreaView>
-            <View style={{display: "flex", flexDirection: 'row'}}>
-                <View style={{backgroundColor: theme.colors.primary, flexGrow: 1}}>
+            <View style={{display: "flex", flexDirection: 'row', backgroundColor: theme.colors.primary}}>
+                <View style={{flexGrow: 0}}>
                     <FilterButton
                         onPress={() => setIsVisible(true)}
                         title={`${arrayDatas()[indexMesFiltro]}/${arrayAnos()[indexAnoFiltro]}`}
@@ -178,11 +190,38 @@ const ListaDespesas = (props) => {
                         </View>
                     </Overlay>
                 </View>
+                <View style={{flexGrow: 1}}>
+                    <FilterButton
+                        onPress={() => setIsVisibleFiltroCatalogo(true)}
+                        title='TODOS'
+                    />
+                    <FiltroCatalogo
+                        isVisible={isVisibleFiltroCatalogo}
+                        onBackdropPress={toogleVisibleFiltroCatalogo}
+                        buscarDespesasPorFiltro={buscarDespesasPorFiltro}
+                        arrIdCatalogo={arrIdCatalogo}
+                        setArrIdCatalogo={setArrIdCatalogo}
+                    />
+                </View>
+                <View style={{flexGrow: 1, alignItems: 'center', paddingVertical: 15}}>
+                    {(loadingDespesasFiltro) &&
+                    <View>
+                        <ActivityIndicator
+                            color={theme.colors.secondary}
+                        />
+                    </View>
+                    }
+                    {(!loadingDespesasFiltro) &&
+                    <Text style={{fontSize: 14, fontWeight: "bold", color: theme.colors.secondary}}>
+                        R$: {valorTotal}
+                    </Text>
+                    }
+                </View>
             </View>
             {(loadingDespesasFiltro) &&
-            <View style={[styles.containerLoading, styles.horizontalLoading]}>
+            <View>
                 <ActivityIndicator
-                    size={100}
+                    size={70}
                     color={theme.colors.secondary}
                 />
             </View>
@@ -198,6 +237,13 @@ const ListaDespesas = (props) => {
                 refreshing={refreshingList}
                 onRefresh={() => onRefresList()}
             />
+            }
+            {(!loadingDespesasFiltro && arrDespesas.length === 0) &&
+            <View style={{alignSelf: 'center'}}>
+                <Text h4 h4Style={{color: theme.colors.secondary}}>
+                    Nenhuma despesa encontrada
+                </Text>
+            </View>
             }
         </SafeAreaView>
     )

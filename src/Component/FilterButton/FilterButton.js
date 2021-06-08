@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, Text } from "react-native";
+import {TouchableOpacity, Text, View } from "react-native";
 import styles from './styles';
 import {withTheme} from 'react-native-elements';
 import { Icon } from 'react-native-elements';
@@ -12,13 +12,20 @@ const FilterButton = (props) => {
             activeOpacity={0.6}
             style={[styles.appButtonContainer]}
         >
-            <Text style={[styles.appButtonText, {color: theme.colors.secondary}]}>{props.title}</Text>
-            <Icon
-                name='chevron-down'
-                type='font-awesome-5'
-                size={12}
-                color={theme.colors.secondary}
-            />
+            <View style={{display: "flex", flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                <View>
+                    <Text style={[styles.appButtonText, {color: theme.colors.secondary}]}>{props.title}</Text>
+                </View>
+                <View style={{alignSelf: 'center'}}>
+                    <Icon
+                        name='chevron-down'
+                        type='font-awesome-5'
+                        size={12}
+                        color={theme.colors.secondary}
+                        style={{alignSelf: 'flex-end'}}
+                    />
+                </View>
+            </View>
 
         </TouchableOpacity>
     )
