@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-//import { SafeAreaView } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ActivityIndicator, View, Keyboard, FlatList} from 'react-native';
 import TouchableScale from 'react-native-touchable-scale';
@@ -34,8 +33,10 @@ const ListaDespesas = (props) => {
     const [isVisibleFiltroCatalogo, setIsVisibleFiltroCatalogo] = useState(false);
     //controla o state de refresh da lista
     const [refreshingList, setRefreshingList] = useState(false);
-    //state para array de catalogos selecionados
+    //state para array de idcatalogos selecionados
     const [arrIdCatalogo, setArrIdCatalogo] = useState([]);
+    //state para array de nomecatalogos selecionados
+    const [arrNomeCatalogo, setArrNomeCatalogo] = useState([]);
 
     const {theme} = props;
 
@@ -66,7 +67,6 @@ const ListaDespesas = (props) => {
     }
 
     useEffect(() => {
-        console.log('useEffect');
         recuperarDespesas();
     }, [])
 
@@ -145,11 +145,22 @@ const ListaDespesas = (props) => {
         )
     }
 
-    const toogleVisibleOverlay = () => {
-        setIsVisible(!isVisible);
-    }
-    const toogleVisibleFiltroCatalogo = () => {
-        setIsVisibleFiltroCatalogo(!isVisibleFiltroCatalogo);
+    const getTituloFiltroCatalogo = () => {
+        if(arrNomeCatalogo.length > 0){
+            return arrNomeCatalogo.map(nomeCatalogo => {
+                let objetoIcone = getObjIcon(nomeCatalogo);
+                return(
+                    <Icon
+                        name={objetoIcone.name}
+                        type={objetoIcone.type}
+                        color={theme.colors.secondary}
+                        size={15}
+                        style={{marginRight: 5}}
+                    />
+                )
+            })
+        }
+        return 'TODOS';
     }
     return (
         <SafeAreaView style={{height: '100%'}}>
@@ -160,7 +171,6 @@ const ListaDespesas = (props) => {
                 />
                 <Overlay
                     isVisible={isVisible}
-                    onBackdropPress={toogleVisibleOverlay}
                 >
                     <View style={{display: "flex"}}>
                         <View style={{backgroundColor: '#FFF'}}>
@@ -191,14 +201,15 @@ const ListaDespesas = (props) => {
                 <View style={{flexGrow: 1}}>
                     <FilterButton
                         onPress={() => setIsVisibleFiltroCatalogo(true)}
-                        title='TODOS'
+                        title={getTituloFiltroCatalogo()}
                     />
                     <FiltroCatalogo
                         isVisible={isVisibleFiltroCatalogo}
-                        onBackdropPress={toogleVisibleFiltroCatalogo}
                         buscarDespesasPorFiltro={buscarDespesasPorFiltro}
                         arrIdCatalogo={arrIdCatalogo}
+                        arrNomeCatalogo={arrNomeCatalogo}
                         setArrIdCatalogo={setArrIdCatalogo}
+                        setArrNomeCatalogo={setArrNomeCatalogo}
                     />
                 </View>
                 <View style={{flexGrow: 1, alignItems: 'center', paddingVertical: 15}}>

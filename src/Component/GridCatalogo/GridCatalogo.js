@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {Text, withTheme} from 'react-native-elements';
-import { View } from 'react-native';
+import {ActivityIndicator, View} from 'react-native';
 import { getCatalogo } from '../../services/catalogo';
 import { Icon } from 'react-native-elements';
 import { getObjIcon } from '../../utils/utils';
@@ -77,13 +77,25 @@ const GridCatalogo = (props) => {
         })
     }, [])
 
-    return(
-        <View style={{display: 'flex', flexWrap: 'wrap', flexDirection: 'row', marginTop: 10}}>
-            {
-                renderBtnCatalogos()
-            }
-        </View>
-    );
+    if(loadingCatalogo){
+        return (
+            <View>
+                <ActivityIndicator
+                    color={theme.colors.secondary}
+                />
+            </View>
+        )
+    }
+
+    if(arrCatalogo.length > 0 && !loadingCatalogo){
+        return(
+            <View style={{display: 'flex', flexWrap: 'wrap', flexDirection: 'row', marginTop: 10}}>
+                {
+                    renderBtnCatalogos()
+                }
+            </View>
+        );
+    }
 }
 
 export default withTheme(GridCatalogo);

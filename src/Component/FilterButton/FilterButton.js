@@ -13,8 +13,23 @@ const FilterButton = (props) => {
             style={[styles.appButtonContainer]}
         >
             <View style={{display: "flex", flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                <View>
+                <View style={{display: 'flex', flexDirection: 'row'}}>
+                    {(Array.isArray(props.title) && props.title.length > 0) &&
+                        <>
+                    <Text>
+                            {props.title[0]}
+                            {props.title.length > 1 ? props.title[1] : ''}
+                            {props.title.length > 2 ? props.title[2] : ''}
+
+                    </Text>
+                            <Text style={[styles.appButtonText, {color: theme.colors.secondary}]}>
+                                {props.title.length > 3 ? ' + ' + (props.title.length  - 3)  : ''}
+                            </Text>
+                        </>
+                    }
+                    {(!Array.isArray(props.title)) &&
                     <Text style={[styles.appButtonText, {color: theme.colors.secondary}]}>{props.title}</Text>
+                    }
                 </View>
                 <View style={{alignSelf: 'center'}}>
                     <Icon

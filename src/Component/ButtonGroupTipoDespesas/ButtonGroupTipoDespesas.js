@@ -57,33 +57,34 @@ const ButtonGroupTipoDespesas = (props) => {
             </View>
         )
     }
-    return (
-        <>
-            <ButtonGroup
-                onPress={(value) => handleChangeSelected(value)}
-                selectedIndex={selectedIndex}
-                buttons=
-                    {
-                        loadingTipoDespesa ?
-                            ['carregando...']
-                            : arrNomeTipoDespesas
-                    }
-                containerStyle={{height: 30}}
-                selectedTextStyle={{color: 'green'}}
-                textStyle={{fontWeight: 'bold'}}
-            />
-            <GridCatalogo
-                selectedIdTipoDespesa={selectedIdTipoDespesa}
-                selectedIdCatalogo={props.selectedIdCatalogo}
-                setSelectedIdCatalogo={props.setSelectedIdCatalogo}
-                setNomeCatalogo={props.setNomeCatalogo}
-                handlePressBtnCatalogo={props.handlePressBtnCatalogo}
-                from={props.from}
-                arrIdCatalogo={props.arrIdCatalogo}
-            />
-        </>
-    )
-
+    if (arrNomeTipoDespesas.length > 0 && !loadingTipoDespesa) {
+        return (
+            <>
+                <ButtonGroup
+                    onPress={(value) => handleChangeSelected(value)}
+                    selectedIndex={selectedIndex}
+                    buttons=
+                        {
+                            loadingTipoDespesa ?
+                                ['carregando...']
+                                : arrNomeTipoDespesas
+                        }
+                    containerStyle={{height: 30}}
+                    selectedTextStyle={{color: 'green'}}
+                    textStyle={{fontWeight: 'bold'}}
+                />
+                <GridCatalogo
+                    selectedIdTipoDespesa={selectedIdTipoDespesa}
+                    selectedIdCatalogo={props.selectedIdCatalogo}
+                    setSelectedIdCatalogo={props.setSelectedIdCatalogo}
+                    setNomeCatalogo={props.setNomeCatalogo}
+                    handlePressBtnCatalogo={props.handlePressBtnCatalogo}
+                    from={props.from}
+                    arrIdCatalogo={props.arrIdCatalogo}
+                />
+            </>
+        )
+    }
 }
 
 export default ButtonGroupTipoDespesas;
