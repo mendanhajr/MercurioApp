@@ -8,7 +8,7 @@ import {arrayAnos} from '../../utils/utils';
 
 const QuintaEtapa = (props) => {
     return (
-        <View style={{flex: 1, justifyContent: 'space-around'}}>
+        <View style={{display: 'flex', justifyContent: 'space-around', height: '90%'}}>
             <View
                 style={styles.containerNota}
             >
