@@ -152,44 +152,42 @@ const ListaDespesas = (props) => {
         setIsVisibleFiltroCatalogo(!isVisibleFiltroCatalogo);
     }
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{height: '100%'}}>
             <View style={{display: "flex", flexDirection: 'row', backgroundColor: theme.colors.primary}}>
-                <View style={{flexGrow: 0}}>
-                    <FilterButton
-                        onPress={() => setIsVisible(true)}
-                        title={`${arrayDatas()[indexMesFiltro]}/${arrayAnos()[indexAnoFiltro]}`}
-                    />
-                    <Overlay
-                        isVisible={isVisible}
-                        onBackdropPress={toogleVisibleOverlay}
-                    >
-                        <View style={{display: "flex"}}>
-                            <View style={{backgroundColor: '#FFF'}}>
-                                <BoxAnoMes
-                                    selectedIndexMes={indexMesFiltro}
-                                    setSelectedIndexMes={setIndexMesFiltro}
-                                    selectedIndexAno={indexAnoFiltro}
-                                    setSelectedIndexAno={setIndexAnoFiltro}
-                                    backgroundColorBtnMes='#FFF'
-                                />
-                            </View>
-                            <View style={{backgroundColor: '#FFF'}}>
-                                <Button
-                                    title="Filtrar"
-                                    buttonStyle={{backgroundColor: theme.colors.secondary, height: 50}}
-                                    icon={{
-                                        name: "filter",
-                                        type: 'font-awesome-5',
-                                        size: 15,
-                                        color: "white"
-                                    }}
-                                    iconRight
-                                    onPress={() => buscarDespesasPorFiltro()}
-                                />
-                            </View>
+                <FilterButton
+                    onPress={() => setIsVisible(true)}
+                    title={`${arrayDatas()[indexMesFiltro]}/${arrayAnos()[indexAnoFiltro]}`}
+                />
+                <Overlay
+                    isVisible={isVisible}
+                    onBackdropPress={toogleVisibleOverlay}
+                >
+                    <View style={{display: "flex"}}>
+                        <View style={{backgroundColor: '#FFF'}}>
+                            <BoxAnoMes
+                                selectedIndexMes={indexMesFiltro}
+                                setSelectedIndexMes={setIndexMesFiltro}
+                                selectedIndexAno={indexAnoFiltro}
+                                setSelectedIndexAno={setIndexAnoFiltro}
+                                backgroundColorBtnMes='#FFF'
+                            />
                         </View>
-                    </Overlay>
-                </View>
+                        <View style={{backgroundColor: '#FFF'}}>
+                            <Button
+                                title="Filtrar"
+                                buttonStyle={{backgroundColor: theme.colors.secondary, height: 50}}
+                                icon={{
+                                    name: "filter",
+                                    type: 'font-awesome-5',
+                                    size: 15,
+                                    color: "white"
+                                }}
+                                iconRight
+                                onPress={() => buscarDespesasPorFiltro()}
+                            />
+                        </View>
+                    </View>
+                </Overlay>
                 <View style={{flexGrow: 1}}>
                     <FilterButton
                         onPress={() => setIsVisibleFiltroCatalogo(true)}
@@ -226,7 +224,7 @@ const ListaDespesas = (props) => {
                 />
             </View>
             }
-            {(!loadingDespesasFiltro) &&
+            {(!loadingDespesasFiltro && arrDespesas.length > 0) &&
             <FlatList
                 data={arrDespesas}
                 extraData={arrDespesas}
