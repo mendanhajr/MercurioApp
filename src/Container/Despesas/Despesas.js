@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {withTheme} from 'react-native-elements';
 import {View} from 'react-native';
 import Swiper from 'react-native-deck-swiper';
@@ -13,6 +13,7 @@ const mesAtual = new Date().getMonth();
 import styles from './styles';
 import {showMessage} from "react-native-flash-message";
 import { useIsFocused } from '@react-navigation/native';
+import OneSignal from 'react-native-onesignal';
 
 
 function Despesas(props) {
@@ -46,6 +47,10 @@ function Despesas(props) {
 
     const {theme} = props;
     let refSwiper = null;
+
+    useEffect(() => {
+
+    })
 
     const handleClickBtnSalvar = (swipeLeft) => {
         let vl_despesa = valor.replace('.', ''),
