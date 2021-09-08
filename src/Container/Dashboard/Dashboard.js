@@ -24,7 +24,7 @@ function optionsHeader(){
     const {theme} = useTheme();
     return(
         {
-            headerTitle: 'MERCURIO',
+            headerTitle: 'MERCURI',
             headerTitleAlign: 'center',
             headerStyle: {
                 backgroundColor: theme.colors.primary,
