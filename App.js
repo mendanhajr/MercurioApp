@@ -6,7 +6,7 @@ import {useFonts} from 'expo-font';
 import {AuthProvider} from './src/contexts/auth'
 import Routes from './src/routes';
 import FlashMessage from "react-native-flash-message";
-import OneSignal from "react-native-onesignal";
+import codePush from "react-native-code-push";
 
 const theme = {
     colors: {
@@ -16,6 +16,10 @@ const theme = {
 }
 
 const App = (props) => {
+    useEffect(() => {
+        //console.log(codePush);
+    })
+
     const [loaded] = useFonts({
         DalekPinpointBold: require('./assets/fonts/DalekPinpointBold.ttf'),
     });
@@ -35,4 +39,5 @@ const App = (props) => {
     );
 }
 
-export default App;
+//export default App;
+export default codePush({checkFrequency: codePush.CheckFrequency.ON_APP_RESUME})(App);
