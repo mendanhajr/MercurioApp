@@ -56,6 +56,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected @Nullable String getJSBundleFile() {
       if (BuildConfig.DEBUG) {
         return super.getJSBundleFile();
+        //return CodePush.getJSBundleFile();
       } else {
         //return UpdatesController.getInstance().getLaunchAssetFile();
         return CodePush.getJSBundleFile();
