@@ -54,7 +54,11 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected @Nullable String getJSBundleFile() {
-      return CodePush.getJSBundleFile();
+    if (BuildConfig.DEBUG) {
+            return super.getJSBundleFile();
+          } else {
+            return CodePush.getJSBundleFile();
+          }
     }
 
     @Override
