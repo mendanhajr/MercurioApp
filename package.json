@@ -1,5 +1,5 @@
 {
-  "name": "MercurioApp",
+  "name": "Mercurio",
   "main": "index.js",
   "scripts": {
     "android": "react-native run-android",
